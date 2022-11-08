@@ -2,6 +2,8 @@ package module
 
 import (
 	component "social-media-be/components"
+	middleware "social-media-be/middlewares"
+	usergin "social-media-be/modules/user/transport/gin"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,6 +11,8 @@ import (
 func MainRoute(router *gin.Engine, appCtx component.AppContext) {
 	v1 := router.Group("/v1")
 	{
-		v1.GET("/")
+		v1.POST("/register", usergin.RegisterHandler(appCtx))
+		v1.POST("/login", usergin.LoginHandler(appCtx))
+		v1.POST("/profile", middleware.RequiredAuth(appCtx), usergin.GetProfileHandler(appCtx))
 	}
 }

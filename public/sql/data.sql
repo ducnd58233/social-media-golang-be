@@ -1,0 +1,83 @@
+CREATE DATABASE IF NOT EXISTS `social_media`;
+USE `social_media`;
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(150) NOT NULL,
+  `password` VARCHAR(150) NOT NULL,
+  `last_name` VARCHAR(50) NOT NULL,
+  `first_name` VARCHAR(50) NOT NULL,
+  `gender` VARCHAR(20) NULL,
+  `phone` VARCHAR(20) DEFAULT NULL,
+  `role` ENUM('user','admin') NOT NULL DEFAULT 'user',
+  `avatar` JSON DEFAULT NULL,
+  `status` INT NOT NULL DEFAULT '1',
+  `last_seen` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+);
+
+DROP TABLE IF EXISTS `posts`;
+CREATE TABLE `posts` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `owner_id` INT NOT NULL,
+  `images` JSON DEFAULT NULL,
+  `desc` TEXT DEFAULT NULL,
+  `status` INT NOT NULL DEFAULT '1',
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `owner_id` (`owner_id`) USING BTREE,
+  KEY `status` (`status`) USING BTREE
+);
+
+DROP TABLE IF EXISTS `post_reactions`;
+CREATE TABLE `post_reactions` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `post_id` INT NOT NULL,
+  `haha` INT NOT NULL DEFAULT '0',
+  `angry` INT NOT NULL DEFAULT '0',
+  `sad` INT NOT NULL DEFAULT '0',
+  `love` INT NOT NULL DEFAULT '0',
+  `status` INT NOT NULL DEFAULT '1',
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `post_id` (`post_id`) USING BTREE,
+  KEY `status` (`status`) USING BTREE
+);
+
+DROP TABLE IF EXISTS `user_reactions`;
+CREATE TABLE `user_reactions` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `post_id` INT NOT NULL,
+  `haha` INT NOT NULL DEFAULT '0',
+  `angry` INT NOT NULL DEFAULT '0',
+  `sad` INT NOT NULL DEFAULT '0',
+  `love` INT NOT NULL DEFAULT '0',
+  `pre_react` ENUM('haha','angry','sad','love','none') NOT NULL DEFAULT 'none',
+  `status` INT NOT NULL DEFAULT '1',
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `post_id` (`post_id`) USING BTREE,
+  KEY `user_id` (`user_id`) USING BTREE,
+  KEY `status` (`status`) USING BTREE
+);
+
+CREATE TABLE IF NOT EXISTS `images` (
+  `id` INT NOT NULL,
+  `url` TEXT NOT NULL,
+  `width` DOUBLE NOT NULL,
+  `height` DOUBLE NOT NULL,
+  `cloud_name` VARCHAR(120) NULL,
+  `extension` VARCHAR(10) NULL,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
+
