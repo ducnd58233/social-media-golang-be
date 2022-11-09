@@ -16,6 +16,15 @@ require (
 )
 
 require (
+	github.com/cloudinary/cloudinary-go/v2 v2.2.0 // indirect
+	github.com/creasty/defaults v1.6.0 // indirect
+	github.com/google/uuid v1.3.0 // indirect
+	github.com/gorilla/schema v1.2.0 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
+)
+
+require (
+	github.com/aws/aws-sdk-go v1.44.132
 	github.com/btcsuite/btcd v0.23.0 // indirect
 	github.com/btcsuite/btcd/btcec/v2 v2.1.3 // indirect
 	github.com/btcsuite/btcd/chaincfg/chainhash v1.0.1 // indirect
