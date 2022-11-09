@@ -69,15 +69,15 @@ CREATE TABLE `user_reactions` (
   KEY `status` (`status`) USING BTREE
 );
 
-CREATE TABLE IF NOT EXISTS `images` (
-  `id` INT NOT NULL,
-  `url` TEXT NOT NULL,
-  `width` DOUBLE NOT NULL,
-  `height` DOUBLE NOT NULL,
-  `cloud_name` VARCHAR(120) NULL,
-  `extension` VARCHAR(10) NULL,
+DROP TABLE IF EXISTS `images`;
+CREATE TABLE `images` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `file_name` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `url` VARCHAR(255) DEFAULT NULL,
+  `width` INT NOT NULL,
+  `height` INT NOT NULL,
+  `status` INT NOT NULL DEFAULT '1',
   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-);
-
+) ENGINE=InnoDB;
