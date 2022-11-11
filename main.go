@@ -9,6 +9,7 @@ import (
 	awsprovider "social-media-be/components/cloudprovider/aws"
 	middleware "social-media-be/middlewares"
 	module "social-media-be/modules"
+	localpubsub "social-media-be/pubsub/local"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -101,7 +102,7 @@ func main() {
 
 	// cloudinary := cloudinaryprovider.NewCloudinaryProvider(cldName, cldApiKey, cldApiSecret, logger)
 
-	appCtx := component.NewAppContext(db, logger, redisDb, s3, secretKey)
+	appCtx := component.NewAppContext(db, logger, redisDb, s3, localpubsub.NewPubSub(), secretKey)
 
 	router := gin.Default()
 
