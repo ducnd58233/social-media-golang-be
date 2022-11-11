@@ -7,6 +7,10 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+type GroupJob interface {
+	Run(ctx context.Context) error
+}
+
 type group struct {
 	isConcurrent bool
 	jobs         []Job
@@ -14,7 +18,7 @@ type group struct {
 	logger       *logrus.Entry
 }
 
-func NewGroup(isConcurrent bool, logger *logrus.Logger, jobs ...Job) *group {
+func NewGroup(isConcurrent bool, logger *logrus.Entry, jobs ...Job) *group {
 	g := &group{
 		isConcurrent: isConcurrent,
 		jobs:         jobs,
