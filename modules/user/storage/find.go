@@ -8,7 +8,11 @@ import (
 	"gorm.io/gorm"
 )
 
-func (s *sqlStore) Find(ctx context.Context, conditions map[string]interface{}, moreInfo ...string) (*usermodel.User, error) {
+func (s *sqlStore) Find(
+	ctx context.Context, 
+	conditions map[string]interface{}, 
+	moreInfo ...string,
+) (*usermodel.User, error) {
 	db := s.db.Table(usermodel.User{}.TableName())
 
 	for i := range moreInfo {

@@ -7,7 +7,11 @@ import (
 	"time"
 )
 
-func (s *sqlStore) UpdateTime(ctx context.Context, time time.Time, email string) error {
+func (s *sqlStore) UpdateTime(
+	ctx context.Context, 
+	time time.Time, 
+	email string,
+) error {
 	db := s.db.Begin().Table(usermodel.TableName)
 
 	if err := db.Where("email = ?", email).Update("last_seen", time).Error; err != nil {
